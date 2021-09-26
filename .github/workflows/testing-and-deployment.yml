@@ -27,7 +27,7 @@ jobs:
 
       - name: Install system requirements
         run: |
-          sudo apt-get install libosmesa6 libgl1-mesa
+          sudo apt-get install libosmesa6-dev libgl1-mesa-dev
 
       - name: Install and test import
         run: |
