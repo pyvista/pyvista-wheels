@@ -29,21 +29,13 @@ jobs:
         run: |
           sudo apt-get install libosmesa6-dev libgl1-mesa-dev
 
-      - name: Install and test import
+      - name: Install VTK and test import
         run: |
           pip install *osmesa*.whl
           python -c "import vtk; print('imported VTK')"
 
-      - name: install pyvista
-        run: |
-          pip install pyvista
+      - name: Install pyvista
+        run: pip install pyvista
 
-      - name: Test plot pyvista
-        run: |
-          pip install pyvista
-          python -c "import pyvista; pyvista.Sphere().plot();print('plotted')"
-
-      - name: Test plot pyvista off screen
-        run: |
-          pip install pyvista
-          python -c "import pyvista; pyvista.Sphere().plot(off_screen=True);print('off-screen plotted')"
+      - name: Test plot pyvista not off_screen
+        run: python -c "import pyvista; pyvista.Sphere().plot(off_screen=False);print('Plotted')"
