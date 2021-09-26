@@ -1,0 +1,31 @@
+name: Unit Testing and Deployment
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+
+# simple action to verify we can import wheels in latest ubuntu
+
+jobs:
+
+  Linux:
+    name: Linux Wheel Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+
+      - name: Install and test import
+        run: |
+          pip install *osmesa*.whl
+          python -c "import vtk"
