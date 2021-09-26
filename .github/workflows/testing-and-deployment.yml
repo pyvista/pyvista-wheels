@@ -34,8 +34,16 @@ jobs:
           pip install *osmesa*.whl
           python -c "import vtk; print('imported VTK')"
 
+      - name: install pyvista
+        run: |
+          pip install pyvista
+
       - name: Test plot pyvista
         run: |
           pip install pyvista
-          python -c "import pyvista; pyvista.Sphere().plot(off_screen=True);print('off-screen plotted')"
           python -c "import pyvista; pyvista.Sphere().plot();print('plotted')"
+
+      - name: Test plot pyvista off screen
+        run: |
+          pip install pyvista
+          python -c "import pyvista; pyvista.Sphere().plot(off_screen=True);print('off-screen plotted')"
