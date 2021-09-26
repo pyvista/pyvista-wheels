@@ -32,4 +32,4 @@ jobs:
       - name: Install and test import
         run: |
           pip install *osmesa*.whl
-          python -c "import vtk"
+          python -c "import vtk; print('imported VTK')"
