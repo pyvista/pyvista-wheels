@@ -31,11 +31,11 @@ jobs:
 
       - name: Install VTK and test import
         run: |
-          pip install *osmesa*.whl
+          pip install vtk-osmesa-9.0.20210926.dev0-cp38-cp38-linux_x86_64.whl
           python -c "import vtk; print('imported VTK')"
 
       - name: Install pyvista
         run: pip install pyvista
 
       - name: Test plot pyvista not off_screen
-        run: python -c "import pyvista; pyvista.Sphere().plot(off_screen=False);print('Plotted')"
+        run: python -c "import pyvista; pyvista.Sphere().plot();print('Plotted')"
