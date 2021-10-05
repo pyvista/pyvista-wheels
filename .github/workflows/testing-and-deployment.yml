@@ -31,7 +31,7 @@ jobs:
 
       - name: Install VTK and test import
         run: |
-          pip install vtk-osmesa-9.0.20210724.dev0-cp38-cp38-linux_x86_64.whl
+          pip install vtk-osmesa-9.1.0.dev0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
           python -c "import vtk; print('imported VTK')"
 
       - name: Install pyvista
