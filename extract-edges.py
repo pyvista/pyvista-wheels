@@ -29,13 +29,13 @@ mesh = examples.download_nefertiti()
 # Extract the edges above a 12 degree feature angle
 edges = mesh.extract_feature_edges(12)
 
-# Render the edge lines on top of the original mesh
-p = pv.Plotter()
-p.add_mesh(mesh, color=True)
-p.add_mesh(edges, color="red", line_width=5)
-# Define a camera position that will zoom to her eye
-p.camera_position = [(96.0, -197.0, 45.0), (7.0, -109.0, 22.0), (0, 0, 1)]
-p.show()
+# # Render the edge lines on top of the original mesh
+# p = pv.Plotter()
+# p.add_mesh(mesh, color=True)
+# p.add_mesh(edges, color="red", line_width=5)
+# # Define a camera position that will zoom to her eye
+# p.camera_position = [(96.0, -197.0, 45.0), (7.0, -109.0, 22.0), (0, 0, 1)]
+# p.show()
 
 ###############################################################################
 # We can do this analysis for any :class:`pyvista.PolyData` object. Let's try
@@ -45,11 +45,11 @@ mesh = examples.download_cow()
 
 edges = mesh.extract_feature_edges(20)
 
-p = pv.Plotter()
-p.add_mesh(mesh, color=True)
-p.add_mesh(edges, color="red", line_width=5)
-p.camera_position = [(9.5, 3.0, 5.5), (2.5, 1, 0), (0, 1, 0)]
-p.show()
+# p = pv.Plotter()
+# p.add_mesh(mesh, color=True)
+# p.add_mesh(edges, color="red", line_width=5)
+# p.camera_position = [(9.5, 3.0, 5.5), (2.5, 1, 0), (0, 1, 0)]
+# p.show()
 
 
 ###############################################################################
@@ -69,11 +69,11 @@ mesh.n_open_edges
 # And we can extract those edges with the ``boundary_edges`` option of
 # :func:`pyvista.PolyDataFilters.extract_feature_edges`:
 edges = mesh.extract_feature_edges(boundary_edges=True,
-                           feature_edges=False,
-                           manifold_edges=False)
+                                   feature_edges=False,
+                                   manifold_edges=False)
 
-p = pv.Plotter()
-p.add_mesh(mesh, color=True)
-p.add_mesh(edges, color="red", line_width=5)
-p.camera_position = [(-0.2, -0.13, 0.12), (-0.015, 0.10, -0.0), (0.28, 0.26, 0.9)]
-p.show()
+# p = pv.Plotter()
+# p.add_mesh(mesh, color=True)
+# p.add_mesh(edges, color="red", line_width=5)
+# p.camera_position = [(-0.2, -0.13, 0.12), (-0.015, 0.10, -0.0), (0.28, 0.26, 0.9)]
+# p.show()

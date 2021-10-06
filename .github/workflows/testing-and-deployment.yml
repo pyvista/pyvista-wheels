@@ -37,8 +37,8 @@ jobs:
       - name: Install pyvista
         run: pip install pyvista
 
-      - name: Test plot pyvista not off_screen
-        run: python -c "import pyvista; pyvista.Sphere().plot();print('Plotted')"
-
       - name: Test Edge case
         run: python extract-edges.py
+
+      # - name: Test plot pyvista not off_screen
+      #   run: python -c "import pyvista; pyvista.Sphere().plot();print('Plotted')"
