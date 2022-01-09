@@ -24,3 +24,7 @@ ninja
 $PYBIN setup.py bdist_wheel
 ```
 
+Build requirements (Ubuntu)
+```
+sudo apt-get install libosmesa6-dev cmake ninja-build
+```
