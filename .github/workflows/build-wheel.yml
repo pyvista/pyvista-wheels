@@ -81,7 +81,6 @@ jobs:
       matrix:
         python-version: [3.7, 3.8, 3.9, "3.10"]
     steps:
-      - uses: actions/checkout@v2
       - name: Install system requirements
         run: sudo apt-get install libosmesa6-dev libgl1-mesa-dev
       - name: Set up Python
@@ -111,11 +110,11 @@ jobs:
         run: pip install pyvista
       - name: Test plot pyvista not off_screen
         run: python -c "import pyvista; pyvista.Sphere().plot(screenshot='screenshot.png');print('Plotted')"
-        - name: Upload Test Screenshot
-          uses: actions/upload-artifact@v2
-          with:
-            name: screenshot.png
-            path: screenshot.png
+      - name: Upload Test Screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot.png
+          path: screenshot.png
 
   # Upload wheels to GH Pages package index
   # publish-wheels:
