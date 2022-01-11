@@ -57,11 +57,13 @@ jobs:
           ..
       - name: Build VTK
         run: cd VTK/build && ninja
+      - name: Tar Build
+        run: tar -zcvf vtk-osmesa-build.tar.gz VTK/build/
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
           name: vtk-build
-          path: VTK/build
+          path: vtk-osmesa-build.tar.gz
       # Make wheel and upload as artifact for testing purposes
       - name: Build Test Wheel
         run: |
@@ -94,7 +96,9 @@ jobs:
         name: Download VTK Build Artifact
         with:
           name: vtk-build
-          path: VTK/build
+          path: vtk-osmesa-build.tar.gz
+      - name: Untar VTK Build
+        run: mkdir VTK && tar -xzvf vtk-osmesa-build.tar.gz VTK/build
       - name: Build Wheel
         run: |
           pip install wheel && \
