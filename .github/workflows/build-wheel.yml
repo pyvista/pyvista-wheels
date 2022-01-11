@@ -59,45 +59,68 @@ jobs:
         with:
           name: vtk-build
           path: VTK/build
-
-      - name: build wheel test
+      # Make wheel and upload as artifact for testing purposes
+      - name: Build Test Wheel
         run: |
           pip install wheel && \
           cd VTK/build && \
           python setup.py bdist_wheel
-      - name: Upload wheel test
+      - name: Upload Test Wheel
         uses: actions/upload-artifact@v2
         with:
-          name: vtk-osmesa-wheel
+          name: vtk-osmesa-test-wheel
           path: VTK/build/dist/*.whl
 
+  # Build wheel for all active Python versions
+  build-wheels:
+    name: OSMesa Wheel Building
+    needs: build-vtk-osmesa
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.7, 3.8, 3.9, "3.10"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install system requirements
+        run: sudo apt-get install libosmesa6-dev libgl1-mesa-dev
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/download-artifact@v2
+        name: Download VTK Build Artifact
+        with:
+          name: vtk-build
+          path: VTK/build
+      - name: Build Wheel
+        run: |
+          pip install wheel && \
+          cd VTK/build && \
+          python setup.py bdist_wheel
+      - name: Upload Wheel Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vtk-osmesa-wheel-py${{ matrix.python-version }}
+          path: VTK/build/dist/*.whl
+      - name: Install VTK and test import
+        run: |
+          pip install VTK/build/dist/*.whl
+          python -c "import vtk; print('imported VTK')"
+      - name: Install pyvista
+        run: pip install pyvista
+      - name: Test plot pyvista not off_screen
+        run: python -c "import pyvista; pyvista.Sphere().plot(screenshot='screenshot.png');print('Plotted')"
+        - name: Upload Test Screenshot
+          uses: actions/upload-artifact@v2
+          with:
+            name: screenshot.png
+            path: screenshot.png
 
-  # build-wheel:
-  #   name: OSMesa Wheel Building
+  # Upload wheels to GH Pages package index
+  # publish-wheels:
+  #   name: Publish Wheels
+  #   needs: build-wheels
   #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       python-version: [3.7, 3.8, 3.9, "3.10"]
   #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install system requirements
-  #       run: |
-  #         sudo apt-get install libosmesa6-dev libgl1-mesa-dev
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: ${{ matrix.python-version }}
-  #     - name: Install VTK and test import
-  #       run: |
-  #         pip install vtk-osmesa-9.1.0.dev0-cp38-cp38-linux_x86_64.whl
-  #         python -c "import vtk; print('imported VTK')"
-
-  #     - name: Install pyvista
-  #       run: pip install pyvista
-
-  #     - name: Test plot pyvista not off_screen
-  #       run: python -c "import pyvista; pyvista.Sphere().plot();print('Plotted')"
-
-  #     - name: Test Edge case
-  #       run: python extract-edges.py
+  #     # TODO: upload wheels to GH pages with index file
