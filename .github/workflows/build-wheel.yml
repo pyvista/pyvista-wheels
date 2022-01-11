@@ -98,7 +98,7 @@ jobs:
           name: vtk-build
           path: vtk-osmesa-build.tar.gz
       - name: Untar VTK Build
-        run: mkdir VTK && tar -xzvf vtk-osmesa-build.tar.gz VTK/build
+        run: tar -xzvf vtk-osmesa-build.tar.gz
       - name: Build Wheel
         run: |
           pip install wheel && \
