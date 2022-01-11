@@ -3,6 +3,9 @@ name: Build Wheel
 on:
   pull_request:
   push:
+    tags: "*"
+    branches:
+      - main
 
 jobs:
   build-vtk-osmesa:
