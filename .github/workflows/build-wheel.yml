@@ -40,7 +40,7 @@ jobs:
         run: |
           cd VTK/build && \
           cmake -GNinja \
-          -DVTK_BUILD_TYPE=Release \
+          -DCMAKE_BUILD_TYPE=Release \
           -DVTK_BUILD_TESTING=OFF \
           -DVTK_BUILD_DOCUMENTATION=OFF \
           -DVTK_BUILD_EXAMPLES=OFF \
