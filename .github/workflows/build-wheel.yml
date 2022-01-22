@@ -88,3 +88,31 @@ jobs:
         with:
           name: py${{ matrix.python-version }}-screenshot.png
           path: screenshot.png
+
+  # Upload wheels to GH Pages package index
+  publish-wheels:
+    name: Publish Wheels
+    needs: build-wheels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - uses: actions/download-artifact@v2
+        name: Download Wheels
+        with:
+          name: vtk-osmesa-wheel-py**
+          path: gh-pages
+      - name: Make index
+        run: |
+          ls -l gh-pages
+          python make_index.py
+      - name: Upload Package Index as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: gh-pages
+          path: gh-pages
+  #     - name: Deploy to GH Pages
+  #       uses: peaceiris/actions-gh-pages@v3
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         publish_dir: ./gh-pages
