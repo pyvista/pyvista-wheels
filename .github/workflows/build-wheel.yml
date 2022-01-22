@@ -14,47 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install system requirements
-        run: |
-          sudo apt-get update && \
-          sudo apt-get install --no-install-recommends --yes \
-              gcc \
-              curl \
-              git \
-              cmake \
-              ninja-build \
-              build-essential \
-              libosmesa6-dev \
-              libxt-dev \
-              libhdf5-dev \
-              libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 \
-              libc6-dev libssl-dev libexpat1-dev \
-          && \
-          sudo rm -rf /var/lib/apt/lists/*
+        run: ./apt.sh
       - name: Download VTK
-        run: |
-          git clone https://github.com/Kitware/VTK.git VTK
-          cd VTK
-          git checkout v9.1.0
-          mkdir build
+        run: ./download_vtk.sh
       - name: Configure VTK
-        run: |
-          cd VTK/build && \
-          cmake -GNinja \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DVTK_BUILD_TESTING=OFF \
-          -DVTK_BUILD_DOCUMENTATION=OFF \
-          -DVTK_BUILD_EXAMPLES=OFF \
-          -DVTK_WHEEL_BUILD=ON \
-          -DVTK_PYTHON_VERSION=3 \
-          -DVTK_WRAP_PYTHON=ON \
-          -DVTK_DEFAULT_RENDER_WINDOW_HEADLESS=True \
-          -DVTK_DATA_EXCLUDE_FROM_ALL:BOOL=ON \
-          -DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING=NO \
-          -DVTK_OPENGL_HAS_EGL=False \
-          -DVTK_OPENGL_HAS_OSMESA=True \
-          -DVTK_USE_COCOA=FALSE \
-          -DVTK_USE_X=FALSE \
-          ..
+        run: ./configure_vtk_osmesa.sh
       - name: Build VTK
         run: cd VTK/build && ninja
       - name: Tar Build
