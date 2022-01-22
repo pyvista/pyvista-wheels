@@ -6,9 +6,9 @@ import time
 path = "gh-pages" if len(sys.argv) == 1 else sys.argv[1]
 indexName = "index.html"
 template = """<html>
-<head><title>large_image_wheels</title></head>
+<head><title>PyVista Wheels</title></head>
 <body>
-<h1>large_image_wheels</h1>
+<h1>PyVista Wheels</h1>
 <pre>
 %LINKS%
 </pre>
