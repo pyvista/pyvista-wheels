@@ -96,9 +96,11 @@ jobs:
         name: Download VTK Build Artifact
         with:
           name: vtk-build
-          path: vtk-osmesa-build.tar.gz
+          path: .
       - name: Untar VTK Build
-        run: tar -xzvf vtk-osmesa-build.tar.gz
+        run: |
+          ls -l
+          tar -xzvf vtk-osmesa-build.tar.gz
       - name: Build Wheel
         run: |
           pip install wheel && \
