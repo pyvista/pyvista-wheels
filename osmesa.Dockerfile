@@ -6,8 +6,12 @@ WORKDIR /opt/build-context/
 RUN ./apt.sh
 RUN ./download_vtk.sh
 
+WORKDIR VTK/build
 RUN ./configure_vtk_osmesa.sh
 
 RUN cd VTK/build && ninja
 
 RUN tar -zcvf vtk-osmesa-build.tar.gz VTK/build/
+
+
+WORKDIR /opt/build-context/

@@ -22,7 +22,7 @@ jobs:
       - name: Download VTK
         run: ./download_vtk.sh
       - name: Configure VTK
-        run: ./configure_vtk_osmesa.sh
+        run: cd VTK/build && ../../configure_vtk_osmesa.sh
       - name: Build VTK
         run: cd VTK/build && ninja
       - name: Tar Build

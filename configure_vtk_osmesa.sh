@@ -1,6 +1,5 @@
 #!/bin/sh
 set -x
-cd VTK/build
 cmake -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DVTK_BUILD_TESTING=OFF \
