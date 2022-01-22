@@ -1,11 +1,12 @@
 name: Build Wheel
 
 on:
-  pull_request:
-  push:
-    tags: "*"
-    branches:
-      - main
+  workflow_dispatch:
+  # pull_request:
+  # push:
+  #   tags: "*"
+  #   branches:
+  #     - main
 
 jobs:
   build-vtk-osmesa:
