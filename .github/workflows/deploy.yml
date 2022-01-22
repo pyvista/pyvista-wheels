@@ -18,6 +18,8 @@ jobs:
       - name: Make index
         run: |
           mkdir gh-pages
+          cp vtk-osmesa-9.1.0-cp38-cp38-linux_x86_64.whl vtk_osmesa-9.1.0-cp38-cp38-linux_x86_64.whl
+          cp vtk-osmesa-9.1.0-cp39-cp39-linux_x86_64.whl vtk_osmesa-9.1.0-cp39-cp39-linux_x86_64.whl
           mv *.whl gh-pages/
           ls -l gh-pages
           python make_index.py
