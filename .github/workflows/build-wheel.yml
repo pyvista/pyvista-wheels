@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install system requirements
-        run: ./apt.sh
+        run: sudo ./apt.sh
       - name: Download VTK
         run: ./download_vtk.sh
       - name: Configure VTK
