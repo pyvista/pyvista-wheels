@@ -11,6 +11,10 @@ jobs:
   build-vtk-osmesa:
     name: Build VTK with OSMesa
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.7, 3.8, 3.9, "3.10"]
     steps:
       - uses: actions/checkout@v2
       - name: Install system requirements
@@ -40,31 +44,21 @@ jobs:
           name: vtk-osmesa-test-wheel
           path: VTK/build/dist/*.whl
 
-  # Build wheel for all active Python versions
-  build-wheels:
-    name: OSMesa Wheel Building
-    needs: build-vtk-osmesa
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.7, 3.8, 3.9, "3.10"]
-    steps:
-      - name: Install system requirements
-        run: sudo apt-get install libosmesa6-dev libgl1-mesa-dev
+      # Build wheel for all active Python versions
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/download-artifact@v2
-        name: Download VTK Build Artifact
-        with:
-          name: vtk-build
-          path: .
-      - name: Untar VTK Build
-        run: |
-          ls -l
-          tar -xzvf vtk-osmesa-build.tar.gz
+      # - uses: actions/download-artifact@v2
+      #   name: Download VTK Build Artifact
+      #   with:
+      #     name: vtk-build
+      #     path: .
+      # - name: Untar VTK Build
+      #   run: |
+      #     ls -l
+      #     tar -xzvf vtk-osmesa-build.tar.gz
       - name: Build Wheel
         run: |
           pip install wheel && \
@@ -92,7 +86,7 @@ jobs:
   # Upload wheels to GH Pages package index
   publish-wheels:
     name: Publish Wheels
-    needs: build-wheels
+    needs: build-vtk-osmesa
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
