@@ -86,13 +86,5 @@ jobs:
       - name: Upload Test Screenshot
         uses: actions/upload-artifact@v2
         with:
-          name: screenshot.png
+          name: py${{ matrix.python-version }}-screenshot.png
           path: screenshot.png
-
-  # Upload wheels to GH Pages package index
-  # publish-wheels:
-  #   name: Publish Wheels
-  #   needs: build-wheels
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # TODO: upload wheels to GH pages with index file
