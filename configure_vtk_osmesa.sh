@@ -1,5 +1,5 @@
 #!/bin/sh
-set -x
+set -e
 cmake -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DVTK_BUILD_TESTING=OFF \
@@ -16,4 +16,4 @@ cmake -GNinja \
   -DVTK_USE_COCOA=FALSE \
   -DVTK_USE_X=FALSE \
   ..
-set +x
+set +e
