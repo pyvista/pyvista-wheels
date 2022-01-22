@@ -8,8 +8,7 @@ RUN /opt/build-context//download_vtk.sh
 
 WORKDIR VTK/build
 RUN /opt/build-context/configure_vtk_osmesa.sh
-
-RUN cd VTK/build && ninja
+RUN ninja
 
 RUN tar -zcvf vtk-osmesa-build.tar.gz VTK/build/
 
