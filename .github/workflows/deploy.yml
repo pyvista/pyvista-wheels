@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
       - name: Make index
         run: |
           mkdir gh-pages
@@ -22,7 +20,10 @@ jobs:
           cp vtk-osmesa-9.1.0-cp39-cp39-linux_x86_64.whl vtk_osmesa-9.1.0-cp39-cp39-linux_x86_64.whl
           mv *.whl gh-pages/
           ls -l gh-pages
-          python make_index.py
+      - name: Make package index
+        uses: banesullivan/create-pip-index-action@main
+        with:
+          package_directory: ./gh-pages
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
