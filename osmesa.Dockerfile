@@ -1,5 +1,6 @@
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
+ARG VTK_VERSION=9.0.1
 
 COPY . /opt/build-context/
 WORKDIR /opt/build-context/

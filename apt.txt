@@ -13,3 +13,4 @@ libsdl2-2.0-0
 libc6-dev
 libssl-dev
 libexpat1-dev
+python3-dev

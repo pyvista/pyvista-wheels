@@ -2,6 +2,11 @@ name: Docker Build Environment
 
 on:
   workflow_dispatch:
+    inputs:
+      vtk_version:
+        description: 'VTK Version'
+        required: true
+        default: '9.0.1'
   pull_request:
   push:
     tags: "*"
@@ -34,6 +39,8 @@ jobs:
         with:
           context: .
           file: osmesa.Dockerfile
+          build-args: |
+            VTK_VERSION=${{ github.event.inputs.vtk_version }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
