@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir gh-pages
           mv osmesa gh-pages/
-          mv *.whl gh-pages/
+          mv vtk-9*.whl gh-pages/
           ls -l gh-pages
       - name: Make package index
         uses: banesullivan/create-pip-index-action@main
