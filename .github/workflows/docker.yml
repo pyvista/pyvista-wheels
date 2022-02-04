@@ -59,7 +59,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Dependencies
         run: |
-          pip install whell
+          pip install wheel
       - name: Build wheel
         run: python setup.py bdist_wheel
       - name: Upload wheel
