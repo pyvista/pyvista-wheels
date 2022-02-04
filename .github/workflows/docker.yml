@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       vtk_version:
-        description: 'VTK Version'
+        description: 'VTK Version - use a tag or commit hash'
         required: true
-        default: '9.1.0'
+        default: 'v9.1.0'
   pull_request:
   push:
     tags: "*"
