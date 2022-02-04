@@ -6,7 +6,7 @@ on:
       vtk_version:
         description: 'VTK Version'
         required: true
-        default: '9.0.1'
+        default: '9.1.0'
   pull_request:
   push:
     tags: "*"
