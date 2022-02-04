@@ -16,16 +16,20 @@ jobs:
       - name: Make index
         run: |
           mkdir gh-pages
-          cp vtk-osmesa-9.1.0-cp38-cp38-linux_x86_64.whl vtk_osmesa-9.1.0-cp38-cp38-linux_x86_64.whl
-          cp vtk-osmesa-9.1.0-cp39-cp39-linux_x86_64.whl vtk_osmesa-9.1.0-cp39-cp39-linux_x86_64.whl
+          mv osmesa gh-pages/
           mv *.whl gh-pages/
           ls -l gh-pages
       - name: Make package index
         uses: banesullivan/create-pip-index-action@main
         with:
           package_directory: ./gh-pages
+      - name: Make package index
+        uses: banesullivan/create-pip-index-action@main
+        with:
+          package_directory: ./gh-pages/osmesa
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./gh-pages
+          cname: wheels.pyvista.org
