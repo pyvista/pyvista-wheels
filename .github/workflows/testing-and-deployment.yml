@@ -10,6 +10,8 @@ on:
       - main
 
 # simple action to verify we can import wheels in latest ubuntu
+env:
+  PYVISTA_OFF_SCREEN: true
 
 jobs:
 
@@ -31,7 +33,7 @@ jobs:
 
       - name: Install VTK and test import
         run: |
-          pip install vtk-osmesa-9.1.0.dev0-cp38-cp38-linux_x86_64.whl
+          pip install osmesa/vtk-9.1.0-cp38-cp38-linux_x86_64.whl
           python -c "import vtk; print('imported VTK')"
 
       - name: Install pyvista
