@@ -48,7 +48,7 @@ jobs:
   build-wheel:
     # needs: build-docker
     runs-on: ubuntu-latest
-    container: ghcr.io/pyvista/pyvista-wheels:test
+    container: ghcr.io/pyvista/pyvista-wheels:test-cmd
     strategy:
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10']
