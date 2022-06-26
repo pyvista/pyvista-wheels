@@ -1,10 +1,10 @@
 ### PyVista VTK Wheels
 
-Here are hosted VTK wheels build using OSMesa on Ubuntu 20.04 with glib 2.31. For a variety of reasons, these wheels were not built on an earlier version of Linux, nor were "repaired" using ``auditwheel``, and are therefore have limited comparability.  See the last section for build notes. 
+Here are hosted VTK wheels build using OSMesa on Ubuntu 20.04 with glib 2.31 for the Python 3.8 wheel, and Ubuntu 22.04 for the OSMesa Python 3.9 wheel. For a variety of reasons, these wheels were not built on an earlier version of Linux, nor were "repaired" using ``auditwheel``, and are therefore have limited comparability.  See the last section for build notes. 
 
 These wheels are used within the [PyVista documentation build](https://github.com/pyvista/pyvista/blob/main/azure-pipelines.yml) to avoid using ``xvfb``, which has been found to be unstable and has lower performance.
 
-### Build Process
+### Build Process for the Python 3.8 OSMesa Wheel
 
 Build requirements (Ubuntu)
 ```
@@ -42,6 +42,69 @@ $PYBIN setup.py bdist_wheel
 ```
 
 Wheels will then be generated in VTK/build/dist.
+
+
+### Build Process for the Python 3.9 OSMesa Wheel
+
+Due to issues with the "lighter" Python 3.8 wheel, the Python 3.9 wheel follows the build procedures
+defined in in [VTK GitLab CI](https://gitlab.kitware.com/vtk/vtk/-/tree/master/.gitlab/ci).
+
+```
+#!/bin/bash
+
+rm -rf build
+mkdir build
+cd build
+
+PYBIN=/usr/bin/python3.9
+cmake -GNinja \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DVTK_BUILD_TESTING=OFF \
+      -DVTK_BUILD_DOCUMENTATION=OFF \
+      -DVTK_BUILD_EXAMPLES=OFF \
+      -DVTK_DATA_EXCLUDE_FROM_ALL:BOOL=ON \
+      -DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING=NO \
+      -DVTK_BUILD_ALL_MODULES:BOOL=ON \
+      -DVTK_ENABLE_REMOTE_MODULES:BOOL=OFF \
+      -DVTK_ENABLE_OSPRAY:BOOL=OFF \
+      -DVTK_ENABLE_VR_COLLABORATION:BOOL=OFF \
+      -DVTK_GROUP_ENABLE_Qt:STRING=NO \
+      -DVTK_DEBUG_LEAKS:BOOL=OFF \
+      \
+      -DModule_vtkAcceleratorsVTKm:BOOL=OFF \
+      -DVTK_MODULE_ENABLE_VTK_CommonArchive:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_FiltersOpenTURNS:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_FiltersReebGraph:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOADIOS2:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOFFMPEG:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOGDAL:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOLAS:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOMySQL:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOODBC:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOOpenVDB:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOPDAL:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_IOPostgreSQL:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_InfovisBoost:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_InfovisBoostGraphAlgorithms:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_RenderingFreeTypeFontConfig:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_RenderingOpenVR:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_RenderingRayTracing:STRING=NO \
+      -DVTK_MODULE_ENABLE_VTK_fides:STRING=NO \
+      \
+      -DVTK_WHEEL_BUILD=ON \
+      -DVTK_PYTHON_VERSION=3 \
+      -DVTK_WRAP_PYTHON=ON \
+      -DVTK_OPENGL_HAS_EGL=False \
+      -DVTK_OPENGL_HAS_OSMESA=True \
+      -DVTK_USE_COCOA=FALSE \
+      -DVTK_USE_X=FALSE \
+      -DVTK_DEFAULT_RENDER_WINDOW_HEADLESS=True \
+      -DPython3_EXECUTABLE=$PYBIN ../
+ninja
+$PYBIN setup.py bdist_wheel
+```
+
 
 ### Auditwheel and ManyLinux Build Issues for OSMesa
 
