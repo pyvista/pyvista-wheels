@@ -4,14 +4,15 @@ Here are hosted VTK wheels build using OSMesa on Ubuntu 20.04 with glib 2.31 for
 
 These wheels are used within the [PyVista documentation build](https://github.com/pyvista/pyvista/blob/main/azure-pipelines.yml) to avoid using ``xvfb``, which has been found to be unstable and has lower performance.
 
-### Build Process for the Python 3.8 OSMesa Wheel
+### Build Process for the Python 3.8/3.9 OSMesa Wheels
 
 Build requirements (Ubuntu)
 ```
-sudo apt-get install libosmesa6-dev cmake ninja-build
+sudo apt-get install libosmesa6-dev cmake ninja-build libboost-all-dev
 ```
 
-The `vtk-osmesa-*-cp3*-cp3*-linux_x86_64.whl` wheels were using the following:
+The `vtk-osmesa-*-cp3*-cp3*-linux_x86_64.whl` wheels follows the build procedures
+defined in in [VTK GitLab CI](https://gitlab.kitware.com/vtk/vtk/-/tree/master/.gitlab/ci).
 
 ```
 git clone https://github.com/Kitware/VTK.git
@@ -20,43 +21,7 @@ git checkout v9.1.0
 mkdir build
 cd build
 
-PYBIN=/usr/bin/python3.8
-cmake -GNinja \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DVTK_BUILD_TESTING=OFF \
-      -DVTK_BUILD_DOCUMENTATION=OFF \
-      -DVTK_BUILD_EXAMPLES=OFF \
-      -DVTK_DATA_EXCLUDE_FROM_ALL:BOOL=ON \
-      -DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING=NO \
-      -DVTK_WHEEL_BUILD=ON \
-      -DVTK_PYTHON_VERSION=3 \
-      -DVTK_WRAP_PYTHON=ON \
-      -DVTK_OPENGL_HAS_EGL=False \
-      -DVTK_OPENGL_HAS_OSMESA=True \
-      -DVTK_USE_COCOA=FALSE \
-      -DVTK_USE_X=FALSE \
-      -DVTK_DEFAULT_RENDER_WINDOW_HEADLESS=True \
-      -DPython3_EXECUTABLE=$PYBIN ../
-ninja
-$PYBIN setup.py bdist_wheel
-```
-
-Wheels will then be generated in VTK/build/dist.
-
-
-### Build Process for the Python 3.9 OSMesa Wheel
-
-Due to issues with the "lighter" Python 3.8 wheel, the Python 3.9 wheel follows the build procedures
-defined in in [VTK GitLab CI](https://gitlab.kitware.com/vtk/vtk/-/tree/master/.gitlab/ci).
-
-```
-#!/bin/bash
-
-rm -rf build
-mkdir build
-cd build
-
-PYBIN=/usr/bin/python3.9
+PYBIN=/usr/bin/python3.8  # or 3.9
 cmake -GNinja \
       -DCMAKE_BUILD_TYPE=Release \
       -DVTK_BUILD_TESTING=OFF \
@@ -104,6 +69,8 @@ cmake -GNinja \
 ninja
 $PYBIN setup.py bdist_wheel
 ```
+
+Wheels will then be generated in VTK/build/dist.
 
 
 ### Auditwheel and ManyLinux Build Issues for OSMesa
