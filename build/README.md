@@ -20,13 +20,15 @@ The included `.cmake` files here make it fairly easy to reproduce this build on 
 To create an OSMesa wheel:
 
 ```
-VTK_VERSION="9.2.2"
-BUILD_VARIANT="osmesa"
+export VTK_VERSION="9.2.2"
+export BUILD_VARIANT="osmesa"
 
 ./download_vtk.sh
 
-mkdir VTK-${VTK_VERSION}/build
-cd VTK-${VTK_VERSION}/build
+cd VTK-${VTK_VERSION}
+mkdir build
+cd build
+cp ../../*.cmake ./
 cmake -GNinja \
     -C configure_${BUILD_VARIANT}.cmake \
     ..
@@ -34,5 +36,9 @@ ninja
 
 # Edit the setup.py file to support variant in version
 # https://gitlab.kitware.com/vtk/vtk/-/merge_requests/9674
+cp ../../hack_version.py ./
 python hack_version.py
+
+python -m pip install wheel
+python setup.py bdist_wheel
 ```
