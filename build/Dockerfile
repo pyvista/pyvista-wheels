@@ -48,7 +48,7 @@ RUN python -c "import vtk;vtk.vtkRenderer()"
 RUN python -m pip install pyvista
 RUN python -c "import pyvista;print(pyvista.Report())"
 # Make sure off screen by default
-RUN python -c "import pyvista;pyvista.Cone().plot(show_edges=True)"
+# RUN python -c "import pyvista;pyvista.Cone().plot(show_edges=True)"
 
 # Repair wheel to include OSMesa libs
 # RUN python -m pip install auditwheel
