@@ -1,8 +1,8 @@
 ### PyVista VTK Wheels
 
-Here are hosted VTK wheels build using OSMesa on Ubuntu 20.04 with glib 2.31 for the Python 3.8 wheel, and Ubuntu 22.04 for the OSMesa Python 3.9 wheel. For a variety of reasons, these wheels were not built on an earlier version of Linux, nor were "repaired" using ``auditwheel``, and are therefore have limited comparability.  See the last section for build notes. 
+Here are hosted VTK wheels build using OSMesa on Ubuntu 20.04 with glib 2.31 for the Python 3.8 wheel, and Ubuntu 22.04 for the OSMesa Python 3.9 wheel. For a variety of reasons, these wheels were not built on an earlier version of Linux, nor were "repaired" using ``auditwheel``, and are therefore have limited comparability.  See the last section for build notes.
 
-These wheels are used within the [PyVista documentation build](https://github.com/pyvista/pyvista/blob/main/azure-pipelines.yml) to avoid using ``xvfb``, which has been found to be unstable and has lower performance.
+These wheels are used within the [PyVista documentation build](https://github.com/pyvista/pyvista/blob/main/.github/workflows/docs.yml) to avoid using ``xvfb``, which has been found to be unstable and has lower performance.
 
 ### Build Process for the Python 3.8/3.9 OSMesa Wheels
 
