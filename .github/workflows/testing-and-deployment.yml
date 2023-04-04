@@ -44,3 +44,32 @@ jobs:
 
       - name: Test Edge case
         run: python extract-edges.py
+
+  osmesa-win:
+    name: OSMesa Wheel Testing on Windows
+    runs-on: windows-latest
+    env:
+      CI_WINDOWS: true
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+
+      - name: Install pyvista
+        run: pip install pyvista
+
+      - name: Install VTK and test import
+        run: |
+          pip uninstall vtk --yes
+          pip install vtk_osmesa-9.2.20230328.dev0+mr76961-cp311-cp311-win_amd64.whl
+          python -c "import vtk; print('imported VTK')"
+
+      - name: Test plot pyvista not off_screen
+        run: python -c "import pyvista; pyvista.Sphere().plot();print('Plotted')"
+
+      - name: Test Edge case
+        run: python extract-edges.py
